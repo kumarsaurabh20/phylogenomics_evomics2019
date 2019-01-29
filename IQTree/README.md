@@ -5,7 +5,9 @@ If you haven’t installed IQ-TREE, please download and install the binary for y
 Run the command
 
 `iqtree`
+
 should display something like this to the screen:
+
 `IQ-TREE multicore version 1.7-beta6 for Mac OS X 64-bit built Nov  6 2018
 Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
 Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
@@ -17,45 +19,53 @@ We will use a Turtle data set to demonstrate the use of IQ-TREE throughout the w
 
 The DNA alignment (in FASTA format), which is a subset of the original Turtle data set used to assess the phylogenetic position of Turtle relative to Crocodile and Bird (Chiari et al., 2012)
 
-QUESTIONS:
-View the alignment in Jalview.
-Can you identify the gene boundary from the viewer? Does it roughly match the partition file?
-Is there missing data? Which taxa seem to have most missing data?
-Do you think this missing data can be problematic?
+    QUESTIONS:
+    View the alignment in Jalview.
+    Can you identify the gene boundary from the viewer? Does it roughly match the partition file?
+    Is there missing data? Which taxa seem to have most missing data?
+    Do you think this missing data can be problematic?
 
 
 You can now start to reconstruct a maximum-likelihood (ML) tree for the Turtle data set (assuming that you are in the same folder where the alignment is stored):
 
-iqtree -s turtle.fa -bb 1000 -nt AUTO
+`iqtree -s turtle.fa -bb 1000 -nt AUTO`
+
 Options explained:
+   
+   -s turtle.fa to specify the input alignment as turtle.fa.
+   -bb 1000 to perform the ultrafast bootstrap with 1000 replicates.
+   -nt AUTO to determine the best number of CPU cores to speed up the analysis.
 
--s turtle.fa to specify the input alignment as turtle.fa.
--bb 1000 to perform the ultrafast bootstrap with 1000 replicates.
--nt AUTO to determine the best number of CPU cores to speed up the analysis.
 This simple command will perform three important steps:
-
 Model selection (with ModelFinder) to select the best-fit model to the data.
 Reconstruct the ML tree with the selected model.
 Assess branch supports with the ultrafast bootstrap.
 Once the run is done, IQ-TREE will write several output files including:
 
 turtle.fa.iqtree: the main report file that is self-readable. You should look at this file to see the computational results. It also contains a textual representation of the final tree.
-turtle.fa.treefile: the ML tree in NEWICK format, which can be visualized in FigTree.
-turtle.fa.log: log file of the entire run (also printed on the screen).
-turtle.fa.ckp.gz: checkpoint file used to resume an interrupted analysis.
-And a few other files.
-QUESTIONS:
-Look at the report file turtle.fa.iqtree.
-What is the best-fit model? What do you know about this model?
-Visualise the tree turtle.fa.treefile in FigTree.
-Compare the tree with the published tree (Chiari et al., 2012). Are they the same or different?
-If different, where are the difference(s)?
-Look at the boostrap supports. Which branch(es) have a low support?
 
-3) Applying partition model
+turtle.fa.treefile: the ML tree in NEWICK format, which can be visualized in FigTree.
+
+turtle.fa.log: log file of the entire run (also printed on the screen).
+
+turtle.fa.ckp.gz: checkpoint file used to resume an interrupted analysis.
+
+And a few other files.
+
+    QUESTIONS:
+    Look at the report file turtle.fa.iqtree.
+    What is the best-fit model? What do you know about this model?
+    Visualise the tree turtle.fa.treefile in FigTree.
+    Compare the tree with the published tree (Chiari et al., 2012). Are they the same or different?
+    If different, where are the difference(s)?
+    Look at the boostrap supports. Which branch(es) have a low support?
+
+## Applying partition model
+
 We now perform a partition model analysis, where one allows each partition to have its own model:
 
-iqtree -s turtle.fa -spp turtle.nex -bb 1000 -nt AUTO
+`iqtree -s turtle.fa -spp turtle.nex -bb 1000 -nt AUTO`
+
 Options explained:
 
 -spp turtle.nex to specify the input partition file. It also initiates an edge-linked proportional partition model (i.e. each partition has its own evolutionary rate).
